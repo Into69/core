@@ -81,6 +81,8 @@ SUPPORT_LANGUAGES = [
 
 SUPPORT_CODECS = ["mp3", "wav", "aac", "ogg", "caf"]
 
+SUPPORT_VOICES = ["Clara"]
+
 SUPPORT_FORMATS = [
     "8khz_8bit_mono",
     "8khz_8bit_stereo",
@@ -138,10 +140,12 @@ SUPPORT_FORMATS = [
 
 CONF_CODEC = "codec"
 CONF_FORMAT = "format"
+CONF_VOICE = "voice"
 
 DEFAULT_LANG = "en-us"
 DEFAULT_CODEC = "mp3"
 DEFAULT_FORMAT = "8khz_8bit_mono"
+DEFAULT_VOICE = "Clara"
 
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -174,6 +178,7 @@ class VoiceRSSProvider(Provider):
             "hl": conf[CONF_LANG],
             "c": (conf[CONF_CODEC]).upper(),
             "f": conf[CONF_FORMAT],
+            "v": conf[CONF_VOICE],
         }
 
     @property
@@ -193,6 +198,7 @@ class VoiceRSSProvider(Provider):
 
         form_data["src"] = message
         form_data["hl"] = language
+        form_data["v"] = voice
 
         try:
             with async_timeout.timeout(10):
